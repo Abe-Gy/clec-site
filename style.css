@@ -13,45 +13,65 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: var(--ink);
   line-height: 1.65;
-  background: #fff;
+  background: #f8fafc; /* app: bg-slate-50 */
 }
 a { color: var(--blue); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-/* header */
-.site-header {
+/* header — replica of Layout.tsx guest view */
+.site-header { background: #fff; border-bottom: 1px solid var(--border); }
+.site-header .inner {
+  max-width: 1400px; margin: 0 auto; padding: 16px 32px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 24px; border-bottom: 1px solid var(--border);
-  max-width: 1100px; margin: 0 auto;
 }
-.site-header .logo { font-weight: 700; font-size: 17px; color: var(--ink); letter-spacing: 0.01em; }
-.site-header .logo:hover { text-decoration: none; }
-.site-header nav { display: flex; gap: 22px; font-size: 15px; }
-.site-header nav a, .site-header .lang { color: var(--muted); }
-.site-header nav a:hover, .site-header .lang:hover { color: var(--ink); text-decoration: none; }
-.site-header .lang { font-weight: 600; font-size: 14px; letter-spacing: 0.04em; }
+.site-header .logo img { height: 32px; width: auto; display: block; }
+.header-right { display: flex; align-items: center; gap: 16px; }
+.locale {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 36px; padding: 0 12px; border-radius: 6px;
+  font-size: 14px; font-weight: 500; color: var(--ink);
+}
+.locale:hover { background: #f1f5f9; text-decoration: none; }
+.locale svg.i-globe { width: 16px; height: 16px; }
+@media (max-width: 639px) { .locale .flag { display: none; } }
+@media (max-width: 767px) { .locale .label { display: none; } }
+.btn-login {
+  display: inline-flex; align-items: center; height: 40px; padding: 0 16px;
+  border-radius: 6px; background: hsl(222.2 47.4% 11.2%); color: #fff;
+  font-size: 14px; font-weight: 500;
+}
+.btn-login:hover { background: hsl(222.2 47.4% 20%); text-decoration: none; }
 
 /* hero (the letter) */
 .hero {
   background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 40%, #2563eb 100%);
-  color: #fff; padding: 72px 24px 84px; text-align: center;
+  color: #fff; padding: 112px 24px; text-align: center; /* app: lg:py-28 */
+  position: relative;
 }
+.hero::before { /* app: subtle dot grid overlay, opacity 4% */
+  content: ""; position: absolute; inset: 0; opacity: 0.04; pointer-events: none;
+  background-image: radial-gradient(circle at 1px 1px, #fff 1px, transparent 0);
+  background-size: 32px 32px;
+}
+.hero > * { position: relative; }
 .hero .logo-card {
   display: inline-block; background: #fff; border-radius: 14px;
-  padding: 18px 22px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); margin-bottom: 44px;
+  padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); margin-bottom: 48px; /* app: mb-12 */
 }
 .hero .logo-card img { max-width: 260px; height: auto; display: block; }
 .hero .eyebrow {
   font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
-  color: rgba(255,255,255,0.55); margin-bottom: 14px;
+  color: rgba(255,255,255,0.55); margin-bottom: 16px;
 }
 .hero h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 32px; }
-.hero .letter { max-width: 620px; margin: 0 auto; text-align: left; }
-.hero .letter p { color: rgba(255,255,255,0.82); font-size: 17px; margin-bottom: 18px; }
+.hero .letter { max-width: 576px; margin: 0 auto; text-align: left; } /* app: max-w-xl */
+.hero .letter p { color: rgba(255,255,255,0.82); font-size: 18px; margin-bottom: 20px; } /* app: sm:text-lg, space-y-5 */
 .hero .letter p.close { color: #fff; font-weight: 600; }
 
 /* what we built — faithful to the app: lucide icons, 56px circles, connector line */
-.built { max-width: 900px; margin: 0 auto; padding: 64px 24px; }
+.built { background: #fff; padding: 64px 24px; }
+.built .steps, .built h2 { max-width: 900px; margin-left: auto; margin-right: auto; }
+.built h2 { margin-bottom: 48px; }
 .built h2 { text-align: center; font-size: 28px; margin-bottom: 48px; }
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); position: relative; }
 .steps::before {
@@ -102,14 +122,16 @@ a:hover { text-decoration: underline; }
 .sleep h1 { font-size: 30px; margin-bottom: 16px; }
 .sleep p { color: var(--muted); margin-bottom: 14px; }
 
-/* footer */
-.site-footer { border-top: 1px solid var(--border); padding: 30px 24px 36px; }
-.site-footer .inner { max-width: 1100px; margin: 0 auto; text-align: center; }
-.site-footer .brand { font-weight: 700; margin-bottom: 12px; }
-.foot-links { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 14px; font-size: 15px; }
+/* footer — replica of Layout.tsx footer */
+.site-footer { background: #fff; border-top: 1px solid var(--border); }
+.site-footer .inner { max-width: 1400px; margin: 0 auto; padding: 32px; }
+.foot-row { display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 16px; }
+@media (min-width: 768px) { .foot-row { flex-direction: row; } }
+.foot-brand { font-size: 18px; font-weight: 700; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; }
 .foot-links a { color: var(--muted); }
 .foot-links a:hover { color: var(--ink); text-decoration: none; }
-.site-footer .copy { font-size: 13px; color: var(--muted); }
+.foot-copy { margin-top: 16px; text-align: center; font-size: 14px; color: var(--muted); }
 
 /* lucide inline icons */
 .hicon { display: inline-flex; align-items: center; gap: 10px; }
